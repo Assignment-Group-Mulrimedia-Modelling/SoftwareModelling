@@ -74,7 +74,7 @@ public class login {
 		frame.getContentPane().add(lblLoginSystem);
 		
 		JButton btnLogin = new JButton("   Login");
-		Image Images = new ImageIcon(this.getClass().getResource("/ok.png")).getImage();
+		Image Images = new ImageIcon(this.getClass().getResource("Images//ok.png")).getImage();
 		btnLogin.setIcon(new ImageIcon(Images));
 		
 		btnLogin.addActionListener(new ActionListener() {
@@ -96,7 +96,7 @@ public class login {
 					if (count ==1) { //if only 1 result is obtained
 						JOptionPane.showMessageDialog(null, "Username and password is correct");
 						frame.dispose();
-						search home = new search();
+						Homescreen home = new Homescreen();
 						home.setVisible(true);
 					}
 					else { //if no result
@@ -124,7 +124,7 @@ public class login {
 		frame.getContentPane().add(label);
 		
 		JLabel lbllogin = new JLabel("");
-		Image img2 = new ImageIcon(this.getClass().getResource("/MainLogo.png")).getImage();
+		Image img2 = new ImageIcon(this.getClass().getResource("Images/MainLogo.png")).getImage();
 		lbllogin.setIcon(new ImageIcon(img2));
 		
 		lbllogin.setBounds(12, 61, 197, 262);
@@ -132,3 +132,4 @@ public class login {
 	}
 
 }
+
