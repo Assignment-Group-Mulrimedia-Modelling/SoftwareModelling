@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2020 at 09:49 PM
+-- Generation Time: Apr 15, 2020 at 12:21 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `product` (
-  `ItemNO` varchar(10) NOT NULL,
+  `ItemNO` int(5) NOT NULL,
   `Name` varchar(50) NOT NULL,
   `Supplier` varchar(50) NOT NULL,
   `QtyBought` varchar(50) NOT NULL,
@@ -44,10 +44,34 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`ItemNO`, `Name`, `Supplier`, `QtyBought`, `Bonus`, `BoxQty`, `WPrice`, `RPrice`, `Exp`) VALUES
-('21538', 'Doliprane', 'DST-Ltd', '45', '0', '8', '45', '57', '03/21'),
-('38694', 'Panadol', 'Unicorn-Trading', '3', '0', '8', '3', '5', '10/20');
+(1, 'Drontal Medium', 'Inicia', '2', '0', '20', '1340', '1608', '09/22'),
+(2, 'Drontal Small', 'Inicia', '3', '1', '20', '900', '1200', '05/23'),
+(21538, 'Doliprane', 'DST-Ltd', '45', '0', '8', '45', '57', '03/21'),
+(38694, 'Panadol', 'Unicorn-Trading', '3', '0', '8', '3', '5', '10/20'),
+(38695, 'Drontal Large', 'Inicia', '2', '0', '20', '3800', '4560', '08/22');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `product`
+--
+ALTER TABLE `product`
+  ADD PRIMARY KEY (`ItemNO`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `product`
+--
+ALTER TABLE `product`
+  MODIFY `ItemNO` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38696;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
