@@ -220,8 +220,8 @@ public class Homescreen extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				
-				//Invoice invoice = new Invoice();
-				//invoice.setVisible(true);
+				search srch = new search();
+				srch.setVisible(true);
 				
 			}
 				@Override
