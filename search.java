@@ -310,6 +310,8 @@ public class search extends JFrame {
 		JButton btnNewButton_1 = new JButton("Save");
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(JOptionPane.showConfirmDialog(null, "Do you want to save and return to homepage ?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0) {
+				
 				try{
 
 					  int rows=table_2.getRowCount();
@@ -332,10 +334,12 @@ public class search extends JFrame {
 						exe.printStackTrace();
 					}
 				
+				Homescreen hom = new Homescreen();
+				hom.setVisible(true);
 				search.this.dispose();
 			}
 			
-				
+			}	
 			
 		});
 		btnNewButton_1.setBounds(656, 450, 89, 23);
