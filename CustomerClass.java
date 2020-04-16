@@ -208,18 +208,28 @@ public class CustomerClass {
 	            	String value7= date_of_birth.getText() ;
 	            	String value6= sexx.getText() ;
 			        String value8= medical_issues.getText() ;
-					String sql ="Update customer set ID = '"+value1+"' ,Surname = '"+value2+"', Name = '"+value3+"', Address = '"+value4+"' , Phone Number = '"+value5+"' ,D.O.B = '"+value6+"' ,Sex = '"+value7+"' ,Medical Issues ='"+value8+"' where ID = '"+value1+"' ";
+					String sql ="Update customer SET Surname =?,Name =?, Address = ?,Number=?,Sex=?,DOB=?,MedicalIssues=? WHERE ID = ? "; 
 			       
-					PreparedStatement pstmt =conn.prepareStatement(sql);
+					PreparedStatement ps = conn.prepareStatement(sql);
+					
+					ps.setString(1, value2);
+					ps.setString(2, value3);
+					ps.setString(3, value4);
+					ps.setString(4, value5);
+					ps.setString(5, value6);
+					ps.setString(6, value7);
+					ps.setString(7, value8);
+					ps.setString(8, value1);
+					
 			        
 			        
-			        pstmt.execute();
+					ps.execute();
 			        JOptionPane.showMessageDialog(null, "UPDATED successfully");
-					pstmt.close();
+			        ps.close();
 					
 				}catch(Exception e1) {
 					 System.out.print(e1);
-					}
+				}
 			}
 		});
 		btnNewButton_1.setBounds(90, 311, 97, 25);
