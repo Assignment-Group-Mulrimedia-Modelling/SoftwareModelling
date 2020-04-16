@@ -1,19 +1,17 @@
-import java.awt.BorderLayout;
+//import java.awt.BorderLayout;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+
 import javax.swing.*;
 import java.awt.EventQueue;
 import java.util.ArrayList;
+import java.util.Date;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import net.proteanit.sql.DbUtils;
 
-import javax.swing.JButton;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -24,15 +22,24 @@ import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.awt.Toolkit;
+import javax.swing.border.TitledBorder;
 
 public class search extends JFrame {
 
+
+
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
-
+	private JLabel DateLbl;
+	private JLabel TimeLbl;
 	/**
 	 * Launch the application.
 	 */
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -45,6 +52,7 @@ public class search extends JFrame {
 			}
 		});
 	}
+
 	Connection conn = null;
 	private JTextField textFieldSearch;
 	private JTable table_1;
@@ -59,19 +67,27 @@ public class search extends JFrame {
 	private JButton buttonStock;
 	private JButton buttonCustomer;
 	private JButton buttonProduct;
+	private JButton btnNewButton;
+	
+	
+
+	
+	
 	/**
 	 * Create the frame.
 	 */
 	public search() {
+
+		setTitle("Create Invoice");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(search.class.getResource("/Images/Invoice.png")));
 		conn = connection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(380, 125, 900, 488);
+		setBounds(380, 125, 900, 512);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.LIGHT_GRAY);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setToolTipText("");
@@ -84,6 +100,7 @@ public class search extends JFrame {
 		
 		
 		table = new JTable();
+		table.setBackground(Color.CYAN);
 		scrollPane.setViewportView(table); 
 		
 		ArrayList<Item> product = new ArrayList<>();  
@@ -95,7 +112,7 @@ public class search extends JFrame {
 				
 				try {
 					
-					String query = "SELECT Name,Supplier,QtyBought,Bonus,BoxQty,RPrice,RPrice/BoxQty As UnitPrice FROM product";
+					String query = "SELECT Name,Supplier,QtyBought,Bonus,BoxQty,WPrice,RPrice/BoxQty As UnitPrice FROM product";
 					PreparedStatement pst = conn.prepareStatement(query);
 					ResultSet rs = pst.executeQuery();
 					table.setModel(DbUtils.resultSetToTableModel(rs));
@@ -108,6 +125,9 @@ public class search extends JFrame {
 				}
 			}
 		});
+		
+
+
 		textFieldSearch.setBounds(360, 240, 130, 22);
 		contentPane.add(textFieldSearch);
 		textFieldSearch.setColumns(10);
@@ -116,16 +136,30 @@ public class search extends JFrame {
 		table_1.setBounds(148, 322, 1, 1);
 		contentPane.add(table_1);
 		
+		JPanel panel = new JPanel();
+		panel.setToolTipText("");
+		panel.setBounds(269, 267, 583, 164);
+		contentPane.add(panel);
+		panel.setLayout(null);
+		
 		scrollPane_1 = new JScrollPane();
-		scrollPane_1.setForeground(new Color(255, 255, 255));
-		scrollPane_1.setBounds(275, 283, 571, 107);
+		scrollPane_1.setBounds(6, 16, 571, 158);
+		panel.add(scrollPane_1);
+		scrollPane_1.setForeground(Color.WHITE);
 		scrollPane_1.getViewport().setBackground(new Color(255,255,255));
-		contentPane.add(scrollPane_1);
 		
 		table_2 = new JTable();
-		scrollPane_1.setViewportView(table_2);
-		table_2.setBackground(new Color(255, 255, 255));
+		table_2.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+		table_2.setBorder(new LineBorder(Color.RED, 2, true));
 		table_2.setShowGrid(false);
+		table_2.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+			}
+		));
+		scrollPane_1.setViewportView(table_2);
+		table_2.setBackground(Color.CYAN);
 		table_2.setShowHorizontalLines(false);
 		table_2.setShowVerticalLines(false);
 		
@@ -156,8 +190,9 @@ public class search extends JFrame {
 					while(rs.next()) {
 						Item item = new Item();
 						
-						item.setQty(Quantity);
+						
 						item.setName(rs.getString("Name"));
+						item.setQty(Quantity);
 						item.setRPrice(rs.getDouble("RPrice"));
 						item.setBoxQty(rs.getInt("BoxQty"));
 						
@@ -180,16 +215,37 @@ public class search extends JFrame {
 							product.get(i).getName(),
 							product.get(i).getUPrice(),
 							product.get(i).getPrice()
-							
-							
-							
+		
 					});
 				}
 				table_2.setModel(new DefaultTableModel(inv.toArray(new Object[][] {}),
 						new String[] {"Qty", "Name", "UPrice", "Item Total"}));
 				
+				try{
+
+					  int rows=table_2.getRowCount();
+					  int cols = table_2.getColumnCount();
+					  
+					  for(int row = 0; row<rows; row++)
+					  {   
+					    Integer Qty = (Integer)table_2.getValueAt(row, 0);
+					    String Name = (String) table_2.getValueAt(row, 1);
+					    Double uPrice = (Double)table_2.getValueAt(row, 2);
+					    Double ItemTotal = (Double)table_2.getValueAt(row, 3);
+					    
+					    String queryco = "INSERT INTO `invoicerecords`(`Qty`, `Name`, `UPrice`, `Item Total`) VALUES ('"+Qty+"','"+Name+"','"+uPrice+"','"+ItemTotal+"')";
+
+					    PreparedStatement pst = conn.prepareStatement(queryco);
+					    pst.execute();     
+					  }
+					  
+					}
+					catch(SQLException exe){
+						exe.printStackTrace();
+					}
 			}
 		});
+		
 		btnAdd.setBounds(740, 239, 97, 25);
 		contentPane.add(btnAdd);
 		
@@ -206,14 +262,14 @@ public class search extends JFrame {
 		JPanel panelbackgroundInvoice = new JPanel();
 		panelbackgroundInvoice.setBorder(new LineBorder(SystemColor.window, 3));
 		panelbackgroundInvoice.setBackground(SystemColor.controlShadow);
-		panelbackgroundInvoice.setBounds(250, 15, 624, 409);
+		panelbackgroundInvoice.setBounds(250, 15, 624, 429);
 		contentPane.add(panelbackgroundInvoice);
 		panelbackgroundInvoice.setLayout(null);
 		
 		menu = new JPanel();
 		menu.setBorder(new LineBorder(SystemColor.desktop, 2));
 		menu.setBackground(SystemColor.activeCaption);
-		menu.setBounds(25, 15, 192, 409);
+		menu.setBounds(25, 15, 192, 429);
 		contentPane.add(menu);
 		menu.setLayout(null);
 		
@@ -252,5 +308,27 @@ public class search extends JFrame {
 		buttonProduct.setFont(new Font("Arial", Font.BOLD, 15));
 		buttonProduct.setBounds(42, 308, 95, 30);
 		menu.add(buttonProduct);
+		
+		btnNewButton = new JButton("Print");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String printdata = panel.getUIClassID();
+				PrinterJob job = PrinterJob.getPrinterJob();
+				boolean doprint = job.printDialog();
+				if(doprint) {
+					try {
+						
+						job.print();
+						
+					}catch(PrinterException e2){
+						
+					}
+				}
+			}
+		});
+		btnNewButton.setBounds(761, 450, 89, 23);
+		contentPane.add(btnNewButton);
 	}
+	
+
 }
