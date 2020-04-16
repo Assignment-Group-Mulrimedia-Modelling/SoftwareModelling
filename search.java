@@ -220,30 +220,8 @@ public class search extends JFrame {
 				}
 				table_2.setModel(new DefaultTableModel(inv.toArray(new Object[][] {}),
 						new String[] {"Qty", "Name", "UPrice", "Item Total"}));
-				
-				try{
-
-					  int rows=table_2.getRowCount();
-					  int cols = table_2.getColumnCount();
-					  
-					  for(int row = 0; row<rows; row++)
-					  {   
-					    Integer Qty = (Integer)table_2.getValueAt(row, 0);
-					    String Name = (String) table_2.getValueAt(row, 1);
-					    Double uPrice = (Double)table_2.getValueAt(row, 2);
-					    Double ItemTotal = (Double)table_2.getValueAt(row, 3);
-					    
-					    String queryco = "INSERT INTO `invoicerecords`(`Qty`, `Name`, `UPrice`, `Item Total`) VALUES ('"+Qty+"','"+Name+"','"+uPrice+"','"+ItemTotal+"')";
-
-					    PreparedStatement pst = conn.prepareStatement(queryco);
-					    pst.execute();     
-					  }
-					  
-					}
-					catch(SQLException exe){
-						exe.printStackTrace();
-					}
 			}
+
 		});
 		
 		btnAdd.setBounds(740, 239, 97, 25);
@@ -328,7 +306,39 @@ public class search extends JFrame {
 		});
 		btnNewButton.setBounds(761, 450, 89, 23);
 		contentPane.add(btnNewButton);
-	}
-	
+		
+		JButton btnNewButton_1 = new JButton("Save");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try{
 
+					  int rows=table_2.getRowCount();
+					  
+					  for(int row = 0; row<rows; row++)
+					  {   
+					    Integer Qty = (Integer)table_2.getValueAt(row, 0);
+					    String Name = (String) table_2.getValueAt(row, 1);
+					    Double uPrice = (Double)table_2.getValueAt(row, 2);
+					    Double ItemTotal = (Double)table_2.getValueAt(row, 3);
+					    
+					    String queryco = "INSERT INTO `invoicerecords`(`Qty`, `Name`, `UPrice`, `Item Total`) VALUES ('"+Qty+"','"+Name+"','"+uPrice+"','"+ItemTotal+"')";
+
+					    PreparedStatement pst = conn.prepareStatement(queryco);
+					    pst.execute();     
+					  }
+					  
+					}
+					catch(SQLException exe){
+						exe.printStackTrace();
+					}
+				
+				search.this.dispose();
+			}
+			
+				
+			
+		});
+		btnNewButton_1.setBounds(656, 450, 89, 23);
+		contentPane.add(btnNewButton_1);
+	}
 }
