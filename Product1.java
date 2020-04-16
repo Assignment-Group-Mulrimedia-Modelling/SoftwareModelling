@@ -7,10 +7,14 @@ import java.sql.Connection;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Product1 extends JFrame {
 
@@ -42,11 +46,18 @@ public class Product1 extends JFrame {
 	private JTextField textFieldWPrice;
 	private JTextField textFieldID;
 	private JLabel lblProductId;
+	private JTable table;
 
 	/**
 	 * Create the frame.
 	 */
 	public Product1() {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent arg0) {
+				ShowData();
+			}
+		});
 		conn = connection.dbConnector();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 808, 537);
@@ -56,56 +67,56 @@ public class Product1 extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblName = new JLabel("Name");
-		lblName.setBounds(258, 43, 56, 16);
+		lblName.setBounds(304, 43, 56, 16);
 		contentPane.add(lblName);
 		
 		textFieldName = new JTextField();
-		textFieldName.setBounds(337, 40, 116, 22);
+		textFieldName.setBounds(356, 40, 116, 22);
 		contentPane.add(textFieldName);
 		textFieldName.setColumns(10);
 		
 		JLabel lblBonus = new JLabel("Bonus");
-		lblBonus.setBounds(258, 93, 56, 16);
+		lblBonus.setBounds(304, 93, 56, 16);
 		contentPane.add(lblBonus);
 		
 		JLabel lblRPrice = new JLabel("R.Price");
-		lblRPrice.setBounds(251, 143, 74, 16);
+		lblRPrice.setBounds(304, 143, 74, 16);
 		contentPane.add(lblRPrice);
 		
 		textFieldBonus = new JTextField();
-		textFieldBonus.setBounds(337, 90, 116, 22);
+		textFieldBonus.setBounds(356, 90, 116, 22);
 		contentPane.add(textFieldBonus);
 		textFieldBonus.setColumns(10);
 		
 		textFieldRPrice = new JTextField();
-		textFieldRPrice.setBounds(337, 140, 116, 22);
+		textFieldRPrice.setBounds(356, 140, 116, 22);
 		contentPane.add(textFieldRPrice);
 		textFieldRPrice.setColumns(10);
 		
 		JLabel lblSupplier = new JLabel("Supplier");
-		lblSupplier.setBounds(508, 43, 56, 16);
+		lblSupplier.setBounds(578, 43, 56, 16);
 		contentPane.add(lblSupplier);
 		
 		JLabel lblBoxQty = new JLabel("Box Quantity");
-		lblBoxQty.setBounds(488, 93, 74, 16);
+		lblBoxQty.setBounds(560, 93, 74, 16);
 		contentPane.add(lblBoxQty);
 		
 		JLabel lblExpiry = new JLabel("Expiry Date");
-		lblExpiry.setBounds(497, 143, 74, 16);
+		lblExpiry.setBounds(560, 143, 74, 16);
 		contentPane.add(lblExpiry);
 		
 		textFieldSupplier = new JTextField();
-		textFieldSupplier.setBounds(596, 40, 116, 22);
+		textFieldSupplier.setBounds(646, 40, 116, 22);
 		contentPane.add(textFieldSupplier);
 		textFieldSupplier.setColumns(10);
 		
 		textFieldBoxQty = new JTextField();
-		textFieldBoxQty.setBounds(596, 90, 116, 22);
+		textFieldBoxQty.setBounds(646, 90, 116, 22);
 		contentPane.add(textFieldBoxQty);
 		textFieldBoxQty.setColumns(10);
 		
 		textFieldExpiry = new JTextField();
-		textFieldExpiry.setBounds(596, 140, 116, 22);
+		textFieldExpiry.setBounds(646, 140, 116, 22);
 		contentPane.add(textFieldExpiry);
 		textFieldExpiry.setColumns(10);
 		
@@ -136,7 +147,7 @@ public class Product1 extends JFrame {
 		btnAddProduct.setBackground(new Color(255, 255, 255));
 		btnAddProduct.setFont(new Font("Tahoma", Font.BOLD, 13));
 		btnAddProduct.setForeground(new Color(144, 238, 144));
-		btnAddProduct.setBounds(309, 192, 128, 25);
+		btnAddProduct.setBounds(24, 188, 128, 25);
 		contentPane.add(btnAddProduct);
 		
 		textFieldID = new JTextField();
@@ -147,6 +158,13 @@ public class Product1 extends JFrame {
 		lblProductId = new JLabel("Product ID");
 		lblProductId.setBounds(12, 43, 68, 16);
 		contentPane.add(lblProductId);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(199, 188, 563, 289);
+		contentPane.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
 	}
 	
 	private void saveToDatabase() {
@@ -156,7 +174,7 @@ public class Product1 extends JFrame {
 			Qty = Integer.parseInt(textFieldQuantity.getText());
 			Bonus = Integer.parseInt(textFieldBonus.getText());
 			Stock = Qty + Bonus;
-			String Query = "INSERT INTO product VALUES(?,?,?,?,?,?,?,?,?)";
+			String Query = "INSERT INTO product VALUES(?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ps.setString(1, textFieldID.getText());
 			ps.setString(2, textFieldName.getText());
@@ -167,6 +185,8 @@ public class Product1 extends JFrame {
 			ps.setString(7, textFieldWPrice.getText());
 			ps.setString(8, textFieldRPrice.getText());
 			ps.setString(9, textFieldExpiry.getText());
+			ps.setString(10, Integer.toString(Stock));
+			
 	
 			ps.execute();
 			
@@ -174,6 +194,67 @@ public class Product1 extends JFrame {
 			
 		}catch (Exception e){
 			System.out.println("Error: " +e);
+		}
+	}
+	
+	private void ShowData() {
+		Connection conn = connection.dbConnector();
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("ID");
+		model.addColumn("Name");
+		model.addColumn("Supplier");
+		model.addColumn("Qty");
+		model.addColumn("Bonus");
+		model.addColumn("BoxQty");
+		model.addColumn("W.Price");
+		model.addColumn("R.Price");
+		model.addColumn("Expiry");
+		model.addColumn("Stock");
+		
+		try {
+			
+			String query = "SELECT * FROM product";
+			Statement st = conn.createStatement();
+			ResultSet rs = st.executeQuery(query);
+			while (rs.next()) {
+				
+				model.addRow(new Object[] {
+						rs.getString("ItemNO"),
+						rs.getString("Name"),
+						rs.getString("Supplier"),
+						rs.getString("QtyBought"),
+						rs.getString("Bonus"),
+						rs.getString("BoxQty"),
+						rs.getString("WPrice"),
+						rs.getString("RPrice"),
+						rs.getString("Exp"),
+						rs.getString("Stock"),
+						
+						
+				});
+			}
+			rs.close();
+			st.close();
+			conn.close();
+			
+			table.setModel(model);
+			table.setAutoResizeMode(0);
+			table.getColumnModel().getColumn(0).setPreferredWidth(40);
+			table.getColumnModel().getColumn(1).setPreferredWidth(100);
+			table.getColumnModel().getColumn(2).setPreferredWidth(100);
+			table.getColumnModel().getColumn(3).setPreferredWidth(40);
+			table.getColumnModel().getColumn(4).setPreferredWidth(40);
+			table.getColumnModel().getColumn(5).setPreferredWidth(40);
+			table.getColumnModel().getColumn(6).setPreferredWidth(55);
+			table.getColumnModel().getColumn(7).setPreferredWidth(55);
+			table.getColumnModel().getColumn(8).setPreferredWidth(40);
+			table.getColumnModel().getColumn(9).setPreferredWidth(50);
+			
+			
+			
+			
+		} catch(Exception e1) {
+			System.out.println("Error: " + e1);
 		}
 	}
 }
