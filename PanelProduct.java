@@ -138,10 +138,6 @@ public class PanelProduct extends JPanel {
 		add(textFieldWPrice);
 		
 		JButton btnAddProduct = new JButton("Add Product");
-		btnAddProduct.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
 		btnAddProduct.setBackground(new Color(50, 205, 50));
 		btnAddProduct.setForeground(new Color(0, 0, 0));
 		btnAddProduct.setFont(new Font("Arial", Font.PLAIN, 15));
