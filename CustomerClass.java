@@ -192,6 +192,25 @@ public class CustomerClass {
 		textFieldPhone.setColumns(10);
 		
 		btnNewButton = new JButton("DELETE");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					
+					String Query = "DELETE FROM customer WHERE ID = '"+id.getText()+" ' ";
+					PreparedStatement ps = conn.prepareStatement(Query);
+					
+					
+
+					ps.execute();
+					
+					
+					JOptionPane.showMessageDialog(null, "Record Deleted");
+					
+				}catch (Exception ex){
+					System.out.println("Error: " +ex);
+				}
+			}
+		});
 		btnNewButton.setBounds(211, 311, 97, 25);
 		frame.getContentPane().add(btnNewButton);
 		
