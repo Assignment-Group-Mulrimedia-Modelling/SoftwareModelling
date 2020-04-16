@@ -234,11 +234,12 @@ public class Product1 extends JFrame {
 	
 	private void saveToDatabase() {
 		Connection conn = connection.dbConnector();
-		int Qty,Bonus,Stock;
+		int Qty,Bonus,Stock,BoxQty;
 		try {
 			Qty = Integer.parseInt(textFieldQuantity.getText());
 			Bonus = Integer.parseInt(textFieldBonus.getText());
-			Stock = Qty + Bonus;
+			BoxQty = Integer.parseInt(textFieldBoxQty.getText());
+			Stock = (Qty * BoxQty) + (Bonus * BoxQty);
 			String Query = "INSERT INTO product VALUES(?,?,?,?,?,?,?,?,?,?)";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			ps.setString(1, textFieldID.getText());
@@ -324,11 +325,12 @@ public class Product1 extends JFrame {
 	}
 	private void UpdateDatabase() {
 		Connection conn = connection.dbConnector();
-		int Qty,Bonus,Stock;
+		int Qty,Bonus,Stock,BoxQty;
 		try {
 			Qty = Integer.parseInt(textFieldQuantity.getText());
 			Bonus = Integer.parseInt(textFieldBonus.getText());
-			Stock = Qty + Bonus;
+			BoxQty = Integer.parseInt(textFieldBoxQty.getText());
+			Stock = (Qty * BoxQty) + (Bonus * BoxQty);
 			String Query = "UPDATE product SET Name=?,Supplier=?,QtyBought=?,Bonus=?,BoxQty=?,WPrice=?,RPrice=?,Exp=?,Stock=? WHERE ItemNO =? ";
 			
 			PreparedStatement ps = conn.prepareStatement(Query);
