@@ -170,8 +170,12 @@ public class Product1 extends JFrame {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(199, 188, 563, 289);
 		contentPane.add(scrollPane);
+		scrollPane.getViewport().setBackground(new Color(255,255,255));
 		
 		table = new JTable();
+		table.setShowGrid(false);
+		table.setShowHorizontalLines(false);
+		table.setShowVerticalLines(false);
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
@@ -360,13 +364,6 @@ public class Product1 extends JFrame {
 			String Query = "DELETE FROM product WHERE ItemNO = '"+textFieldDelete.getText()+" ' ";
 			PreparedStatement ps = conn.prepareStatement(Query);
 			
-			
-
-			
-			
-			
-			
-	
 			ps.execute();
 			
 			
