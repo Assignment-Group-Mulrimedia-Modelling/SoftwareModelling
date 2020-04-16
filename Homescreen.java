@@ -1,42 +1,39 @@
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.Image;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Color;
-import javax.swing.border.LineBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
 import java.awt.Font;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
+import javax.swing.border.MatteBorder;
+import javax.swing.border.SoftBevelBorder;
+import javax.swing.UIManager;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-public class Homescreen extends JFrame {
+public class Homescreen1 extends JFrame {
 	
+	private Image img_homescreen = new ImageIcon(Homescreen1.class.getResource("Images/homescreen1.png")).getImage().getScaledInstance(816, 700, Image.SCALE_SMOOTH);
+	
+	private Image img_mainlogo = new ImageIcon(Homescreen1.class.getResource("Images/MainLogo.png")).getImage().getScaledInstance(160, 160, Image.SCALE_SMOOTH);
+	
+	private Image img_Stock = new ImageIcon(Homescreen1.class.getResource("Images/stock.png")).getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+	private Image img_Customer = new ImageIcon(Homescreen1.class.getResource("Images/Customer.png")).getImage().getScaledInstance(45, 35, Image.SCALE_SMOOTH);
+	private Image img_Product = new ImageIcon(Homescreen1.class.getResource("Images/Product.png")).getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+	private Image img_invoice = new ImageIcon(Homescreen1.class.getResource("Images/Invoice.png")).getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);	
+	private Image img_Exit = new ImageIcon(Homescreen1.class.getResource("Images/Exit.png")).getImage().getScaledInstance(35, 35, Image.SCALE_SMOOTH);
+	
+
 	private JPanel contentPane;
-	private JPanel panelProduct;
-	
-	private Image img_mainlogo = new ImageIcon(Homescreen.class.getResource("Images/MainLogo.png")).getImage().getScaledInstance(200, 160, Image.SCALE_SMOOTH);	
-	private Image img_home = new ImageIcon(Homescreen.class.getResource("Images/home.png")).getImage().getScaledInstance(58, 58, Image.SCALE_SMOOTH);
-	private Image img_transaction = new ImageIcon(Homescreen.class.getResource("Images/transaction.png")).getImage().getScaledInstance(58, 58, Image.SCALE_SMOOTH);
-	private Image img_invoice = new ImageIcon(Homescreen.class.getResource("Images/Invoice.png")).getImage().getScaledInstance(58, 58, Image.SCALE_SMOOTH);
-	private Image img_product = new ImageIcon(Homescreen.class.getResource("Images/Product.png")).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-	private Image img_customer = new ImageIcon(Homescreen.class.getResource("Images/Customer.png")).getImage().getScaledInstance(55, 50, Image.SCALE_SMOOTH);
-	private Image img_signout = new ImageIcon(Homescreen.class.getResource("Images/Exit.png")).getImage().getScaledInstance(45, 45, Image.SCALE_SMOOTH);
-	
-
-	
-	
-	
-	private PanelHome panelHome;
-	private PanelTransaction panelTransaction;
-	private PanelInvoice panelInvoice;
-	private PanelProduct panelProducts;
-	private PanelCustomer panelCustomer;
 
 	/**
 	 * Launch the application.
@@ -45,7 +42,7 @@ public class Homescreen extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Homescreen frame = new Homescreen();
+					Homescreen1 frame = new Homescreen1();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -57,269 +54,274 @@ public class Homescreen extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Homescreen() {
-		
+	public Homescreen1() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(250, 100, 1000, 650);		
-		setUndecorated(true);
-		setLocationRelativeTo(null);
+		setBounds(250, 75, 1050, 700);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(0, 0, 128));
-		contentPane.setBorder(new LineBorder(new Color(0, 0, 0), 2));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		panelHome = new PanelHome();
-		panelTransaction = new PanelTransaction();
-		panelInvoice = new PanelInvoice();
-		panelProduct = new PanelProduct();
-		panelCustomer = new PanelCustomer();
-		
 		JPanel paneMenu = new JPanel();
-		paneMenu.setBorder(new LineBorder(new Color(255, 0, 0), 2));
-		paneMenu.setForeground(new Color(0, 0, 0));
-		paneMenu.setBackground(new Color(0, 0, 205));
-		paneMenu.setBounds(0, 0, 300, 650);
+		paneMenu.setBorder(new LineBorder(new Color(255, 0, 0)));
+		paneMenu.setBackground(new Color(0, 0, 128));
+		paneMenu.setBounds(0, 0, 234, 663);
 		contentPane.add(paneMenu);
 		paneMenu.setLayout(null);
 		
 		JLabel lbliconlogo = new JLabel("");
 		lbliconlogo.setHorizontalAlignment(SwingConstants.CENTER);
-		lbliconlogo.setBounds(51, 26, 202, 149);
+		lbliconlogo.setBounds(24, -14, 200, 200);
 		lbliconlogo.setIcon(new ImageIcon(img_mainlogo));
 		paneMenu.add(lbliconlogo);
 		
-		JLabel lblName = new JLabel("NouCare Pharmancy");
-		lblName.setForeground(new Color(0, 255, 0));
-		lblName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblName.setFont(new Font("Lucida Calligraphy", Font.BOLD | Font.ITALIC, 20));
-		lblName.setBounds(23, 195, 254, 50);
-		paneMenu.add(lblName);
-		
-		JPanel paneHome = new JPanel();
-		paneHome.addMouseListener(new PanelButtonMouseAdapter(paneHome) {
+		JLabel lblNouCare = new JLabel("NouCare");
+		lblNouCare.setFont(new Font("Lucida Calligraphy", Font.BOLD, 22));
+		lblNouCare.setForeground(new Color(124, 252, 0));
+		lblNouCare.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNouCare.setBounds(10, 180, 214, 38);
+		paneMenu.add(lblNouCare);
+		 
+		JPanel paneStock = new JPanel();
+		paneStock.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				menuClicked(panelHome);
+				
+				  stock stock1 = new stock();
+				  stock1.setVisible(true);
+				
 			}
-		});
-		paneHome.setBackground(new Color(60, 179, 113));
-		paneHome.setForeground(new Color(248, 248, 255));
-		paneHome.setBounds(2, 278, 296, 58);
-		paneMenu.add(paneHome);
-		paneHome.setLayout(null);
-		
-		
-		JLabel lblHome = new JLabel("HOME");
-		lblHome.setFont(new Font("Dialog", Font.BOLD, 19));
-		lblHome.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHome.setBounds(105, 10, 98, 38);
-		paneHome.add(lblHome);
-		
-		JLabel lbliconhome = new JLabel("");
-		lbliconhome.setHorizontalAlignment(SwingConstants.CENTER);
-		lbliconhome.setBounds(10, 0, 58, 58);
-		lbliconhome.setIcon(new ImageIcon(img_home));
-		paneHome.add(lbliconhome);
-		
-		JPanel paneTransaction = new JPanel();
-		paneTransaction.addMouseListener(new PanelButtonMouseAdapter(paneTransaction) {
 				@Override
-				public void mouseClicked(MouseEvent e) {
-					menuClicked(panelTransaction);
+				public void mouseEntered(MouseEvent e) {
+					paneStock.setBackground(new Color(55, 150, 200));
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					paneStock.setBackground(new Color(0, 191, 255));
+				}
+				@Override
+				public void mousePressed(MouseEvent e) {
+					paneStock.setBackground(new Color(10, 250, 255));
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					paneStock.setBackground(new Color(55, 150, 200));
 				}
 		});
-		paneTransaction.setBackground(new Color(60, 179, 113));
-		paneTransaction.setForeground(new Color(248, 248, 255));
-		paneTransaction.setLayout(null);
-		paneTransaction.setBounds(2, 335, 296, 58);
-		paneMenu.add(paneTransaction);
+		paneStock.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0)));
+		paneStock.setBackground(new Color(0, 191, 255));
+		paneStock.setBounds(23, 305, 187, 38);
+		paneMenu.add(paneStock);
+		paneStock.setLayout(null);
 		
-		JLabel lblTransaction = new JLabel("TRANSACTIONS");
-		lblTransaction.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTransaction.setFont(new Font("Dialog", Font.BOLD, 19));
-		lblTransaction.setBounds(87, 10, 152, 38);
-		paneTransaction.add(lblTransaction);
+		JLabel lblStock = new JLabel("STOCK");
+		lblStock.setFont(new Font("Arial", Font.BOLD, 15));
+		lblStock.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStock.setBounds(55, 10, 106, 18);
+		paneStock.add(lblStock);
 		
-		JLabel labelicontransactions = new JLabel("");
-		labelicontransactions.setHorizontalAlignment(SwingConstants.CENTER);
-		labelicontransactions.setBounds(10, 0, 58, 58);
-		labelicontransactions.setIcon(new ImageIcon(img_transaction));
-		paneTransaction.add(labelicontransactions);
+		JLabel lbliconStock = new JLabel("");
+		lbliconStock.setHorizontalAlignment(SwingConstants.CENTER);
+		lbliconStock.setBounds(10, 0, 38, 38);
+		lbliconStock.setIcon(new ImageIcon(img_Stock));
+		paneStock.add(lbliconStock);
+		
+		JPanel paneCustomer = new JPanel();
+		paneCustomer.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				/*CustomerClass customer = new CustomerClass();
+				customer.setVisible(true);*/
+				
+			}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					paneCustomer.setBackground(new Color(55, 150, 200));
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					paneCustomer.setBackground(new Color(0, 191, 255));
+				}
+				@Override
+				public void mousePressed(MouseEvent e) {
+					paneCustomer.setBackground(new Color(10, 250, 255));
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					paneCustomer.setBackground(new Color(55, 150, 200));
+				}
+		});
+		paneCustomer.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0)));
+		paneCustomer.setLayout(null);
+		paneCustomer.setBackground(new Color(0, 191, 255));
+		paneCustomer.setBounds(23, 372, 187, 38);
+		paneMenu.add(paneCustomer);
+		
+		JLabel lblCustomer = new JLabel("CUSTOMER");
+		lblCustomer.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCustomer.setFont(new Font("Arial", Font.BOLD, 15));
+		lblCustomer.setBounds(55, 10, 106, 18);
+		paneCustomer.add(lblCustomer);
+		
+		JLabel lbliconQuicksale = new JLabel("");
+		lbliconQuicksale.setHorizontalAlignment(SwingConstants.CENTER);
+		lbliconQuicksale.setBounds(10, 0, 38, 38);
+		lbliconQuicksale.setIcon(new ImageIcon(img_Customer));
+		paneCustomer.add(lbliconQuicksale);
+		
+		JPanel panePrescription = new JPanel();
+		panePrescription.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				Product product = new Product();
+				product.setVisible(true);
+				
+				
+			}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					panePrescription.setBackground(new Color(55, 150, 200));
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					panePrescription.setBackground(new Color(0, 191, 255));
+				}
+				@Override
+				public void mousePressed(MouseEvent e) {
+					panePrescription.setBackground(new Color(10, 250, 255));
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					panePrescription.setBackground(new Color(55, 150, 200));
+				}
+		});
+		panePrescription.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0)));
+		panePrescription.setLayout(null);
+		panePrescription.setBackground(new Color(0, 191, 255));
+		panePrescription.setBounds(23, 440, 187, 38);
+		paneMenu.add(panePrescription);
+		
+		JLabel lblProduct = new JLabel("PRODUCT");
+		lblProduct.setHorizontalAlignment(SwingConstants.CENTER);
+		lblProduct.setFont(new Font("Arial", Font.BOLD, 15));
+		lblProduct.setBounds(50, 10, 116, 18);
+		panePrescription.add(lblProduct);
+		
+		JLabel lbliconPrescription = new JLabel("");
+		lbliconPrescription.setHorizontalAlignment(SwingConstants.CENTER);
+		lbliconPrescription.setBounds(10, 0, 38, 38);
+		lbliconPrescription.setIcon(new ImageIcon(img_Product));
+		panePrescription.add(lbliconPrescription);
 		
 		JPanel paneInvoice = new JPanel();
-		paneInvoice.addMouseListener(new PanelButtonMouseAdapter(paneInvoice){
+		paneInvoice.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
-				menuClicked(panelInvoice);
+				
+				Invoice invo = new Invoice();
+				invo.setVisible(true);
+				
 			}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					paneInvoice.setBackground(new Color(55, 150, 200));
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					paneInvoice.setBackground(new Color(0, 191, 255));
+				}
+				@Override
+				public void mousePressed(MouseEvent e) {
+					paneInvoice.setBackground(new Color(10, 250, 255));
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					paneInvoice.setBackground(new Color(55, 150, 200));
+				}
+				
+			
 		});
-		paneInvoice.setBackground(new Color(60, 179, 113));
-		paneInvoice.setForeground(new Color(248, 248, 255));
+		paneInvoice.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0), new Color(255, 255, 0)));
 		paneInvoice.setLayout(null);
-		paneInvoice.setBounds(2, 391, 296, 58);
+		paneInvoice.setBackground(new Color(0, 191, 255));
+		paneInvoice.setBounds(23, 508, 187, 38);
 		paneMenu.add(paneInvoice);
 		
 		JLabel lblInvoice = new JLabel("INVOICE");
 		lblInvoice.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInvoice.setFont(new Font("Dialog", Font.BOLD, 19));
-		lblInvoice.setBounds(104, 10, 98, 38);
+		lblInvoice.setFont(new Font("Arial", Font.BOLD, 15));
+		lblInvoice.setBounds(70, 10, 84, 18);
 		paneInvoice.add(lblInvoice);
 		
-		JLabel labeliconinvoice = new JLabel("");
-		labeliconinvoice.setHorizontalAlignment(SwingConstants.CENTER);
-		labeliconinvoice.setBounds(10, 0, 58, 58);
-		labeliconinvoice.setIcon(new ImageIcon(img_invoice));
-		paneInvoice.add(labeliconinvoice);
+		JLabel lbliconCashPurchase = new JLabel("");
+		lbliconCashPurchase.setHorizontalAlignment(SwingConstants.CENTER);
+		lbliconCashPurchase.setBounds(10, 0, 38, 38);
+		lbliconCashPurchase.setIcon(new ImageIcon(img_invoice));
+		paneInvoice.add(lbliconCashPurchase);
 		
-		JPanel paneProduct = new JPanel();
-		paneProduct.addMouseListener(new PanelButtonMouseAdapter(paneProduct){
+		JPanel paneExit = new JPanel();
+		paneExit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				menuClicked(panelProduct);
-			}
-		});
-		paneProduct.setBackground(new Color(60, 179, 113));
-		paneProduct.setForeground(new Color(248, 248, 255));
-		paneProduct.setLayout(null);
-		paneProduct.setBounds(2, 447, 296, 58);
-		paneMenu.add(paneProduct);
-		
-		JLabel labelProduct = new JLabel("PRODUCTS");
-		labelProduct.setHorizontalAlignment(SwingConstants.CENTER);
-		labelProduct.setFont(new Font("Dialog", Font.BOLD, 19));
-		labelProduct.setBounds(105, 10, 107, 38);
-		paneProduct.add(labelProduct);
-		
-		JLabel labeliconproducts = new JLabel("");
-		labeliconproducts.setHorizontalAlignment(SwingConstants.CENTER);
-		labeliconproducts.setBounds(10, 8, 50, 50);
-		labeliconproducts.setIcon(new ImageIcon(img_product));
-		paneProduct.add(labeliconproducts);
-		
-		JPanel paneCustomer = new JPanel();
-		paneCustomer.addMouseListener(new PanelButtonMouseAdapter(paneCustomer) {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				menuClicked(panelCustomer);
-			}
-		});
-		paneCustomer.setBackground(new Color(60, 179, 113));
-		paneCustomer.setForeground(new Color(248, 248, 255));
-		paneCustomer.setLayout(null);
-		paneCustomer.setBounds(2, 503, 296, 58);
-		paneMenu.add(paneCustomer);
-		
-		JLabel labelCustomer = new JLabel("CUSTOMERS");
-		labelCustomer.setHorizontalAlignment(SwingConstants.CENTER);
-		labelCustomer.setFont(new Font("Dialog", Font.BOLD, 19));
-		labelCustomer.setBounds(98, 10, 122, 38);
-		paneCustomer.add(labelCustomer);
-		
-		JLabel labeliconcustomers = new JLabel("");
-		labeliconcustomers.setHorizontalAlignment(SwingConstants.CENTER);
-		labeliconcustomers.setBounds(10, 8, 50, 50);
-		labeliconcustomers.setIcon(new ImageIcon(img_customer));
-		paneCustomer.add(labeliconcustomers);
-		
-		JPanel paneSignOut = new JPanel();
-		paneSignOut.addMouseListener(new PanelButtonMouseAdapter(paneSignOut) {
-			public void mouseClicked(MouseEvent e) {
-				if(JOptionPane.showConfirmDialog(null, "Are you sure you want to close this application?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0) {
-				loginUser lu = new loginUser();
-				lu.setVisible(true);
-				Homescreen.this.dispose();
-				}
-			}
-		});
-		
-		paneSignOut.setBackground(new Color(60, 179, 113));
-		paneSignOut.setForeground(new Color(248, 248, 255));
-		paneSignOut.setLayout(null);
-		paneSignOut.setBounds(2, 560, 296, 58);
-		paneMenu.add(paneSignOut);
-		
-		JLabel labelSignOut = new JLabel("SIGN OUT");
-		labelSignOut.setHorizontalAlignment(SwingConstants.CENTER);
-		labelSignOut.setFont(new Font("Dialog", Font.BOLD, 19));
-		labelSignOut.setBounds(104, 10, 98, 38);
-		paneSignOut.add(labelSignOut);
-		
-		JLabel labeliconsignout = new JLabel("");
-		labeliconsignout.setHorizontalAlignment(SwingConstants.CENTER);
-		labeliconsignout.setBounds(10, 10, 45, 45);
-		labeliconsignout.setIcon(new ImageIcon(img_signout));
-		paneSignOut.add(labeliconsignout);
-		
-		JLabel lblX = new JLabel("X");
-		lblX.setHorizontalAlignment(SwingConstants.CENTER);
-		lblX.setForeground(Color.WHITE);
-		lblX.setFont(new Font("Comic Sans MS", Font.BOLD, 15));
-		lblX.setBounds(970, 2, 34, 16);
-		lblX.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
 				
+				/*
 				if(JOptionPane.showConfirmDialog(null, "Are you sure you want to close this application?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0) {
-					
-					Homescreen.this.dispose();
+					loginUser login = new loginUser();
+					login.setVisible(true);
+					Homescreen1.this.dispose();
 				}
+				*/
+				
 			}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					paneExit.setBackground(new Color(255,69,0));
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					paneExit.setBackground(new Color(255, 0, 0));
+				}
+				@Override
+				public void mousePressed(MouseEvent e) {
+					paneExit.setBackground(new Color(255,99,71));
+				}
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					paneExit.setBackground(new Color(255,69,0));
+				}
 			
-			public void mouseEntered(MouseEvent arg0) {
-				lblX.setForeground(Color.RED);
-			}
-			public void mouseExited(MouseEvent arg0) {
-				lblX.setForeground(Color.WHITE);
-			}	
-				
-		});		
-		contentPane.add(lblX);
+		});
+		paneExit.setBorder(new BevelBorder(BevelBorder.LOWERED, new Color(0, 0, 0), new Color(0, 0, 0), new Color(0, 0, 0), new Color(0, 0, 0)));
+		paneExit.setLayout(null);
+		paneExit.setBackground(new Color(255, 0, 0));
+		paneExit.setBounds(23, 576, 187, 38); 
+		paneMenu.add(paneExit);
 		
-		JPanel paneMainContent = new JPanel();
-		paneMainContent.setBounds(310, 10, 670, 630);
-		contentPane.add(paneMainContent);
-		paneMainContent.setLayout(null);
+		JLabel lblExit = new JLabel("EXIT");
+		lblExit.setForeground(new Color(0, 0, 0));
+		lblExit.setHorizontalAlignment(SwingConstants.CENTER);
+		lblExit.setFont(new Font("Arial", Font.BOLD, 15));
+		lblExit.setBounds(61, 10, 66, 18);
+		paneExit.add(lblExit);
 		
-		paneMainContent.add(panelHome);
-		paneMainContent.add(panelTransaction);
-		paneMainContent.add(panelInvoice);
-		paneMainContent.add(panelProduct);
-		paneMainContent.add(panelCustomer);
+		JLabel lbliconExit = new JLabel("");
+		lbliconExit.setHorizontalAlignment(SwingConstants.CENTER);
+		lbliconExit.setBounds(10, 3, 35, 33);
+		lbliconExit.setIcon(new ImageIcon(img_Exit));
+		paneExit.add(lbliconExit);
 		
-		menuClicked(panelHome);
+		JLabel lblPharmancy = new JLabel("Pharmancy");
+		lblPharmancy.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPharmancy.setForeground(new Color(124, 252, 0));
+		lblPharmancy.setFont(new Font("Lucida Calligraphy", Font.BOLD, 22));
+		lblPharmancy.setBounds(10, 220, 214, 54);
+		paneMenu.add(lblPharmancy);
+		
+		JLabel lblimagebackground = new JLabel("");
+		lblimagebackground.setBounds(234, 0, 802, 673);
+		lblimagebackground.setIcon(new ImageIcon(img_homescreen));
+		contentPane.add(lblimagebackground);
 	}
-	
-	public void menuClicked(JPanel panel) {
-		panelHome.setVisible(false);
-		panelTransaction.setVisible(false);
-		panelInvoice.setVisible(false);
-		panelProduct.setVisible(false);
-		panelCustomer.setVisible(false);
-		
-		panel.setVisible(true);
-	}
-	
-	private class PanelButtonMouseAdapter extends MouseAdapter{
-		
-		JPanel panel;
-		public PanelButtonMouseAdapter(JPanel panel) {
-			this.panel = panel;
-		}
-		public void mouseEntered(MouseEvent e) {
-			panel.setBackground(new Color(112, 128, 144));
-		}
-		
-		public void mouseExited(MouseEvent e) {
-			panel.setBackground(new Color(60, 179, 113));
-		}
-		
-		public void mousePressed(MouseEvent e) {
-			panel.setBackground(new Color(60, 180, 115));
-		}
-		
-		public void mouseReleased(MouseEvent e) {
-			panel.setBackground(new Color(112, 128, 144));
-		}
-	}
-
 }
