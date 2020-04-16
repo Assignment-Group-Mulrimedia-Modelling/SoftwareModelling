@@ -15,6 +15,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Product1 extends JFrame {
 
@@ -47,6 +49,11 @@ public class Product1 extends JFrame {
 	private JTextField textFieldID;
 	private JLabel lblProductId;
 	private JTable table;
+	private JButton btnDelete;
+	private JTextField textFieldDelete;
+	private JLabel lblSelectAProduct;
+	private JLabel lblToUpdateIt;
+	
 
 	/**
 	 * Create the frame.
@@ -142,12 +149,13 @@ public class Product1 extends JFrame {
 		btnAddProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				saveToDatabase();
+				ShowData();
 			}
 		});
 		btnAddProduct.setBackground(new Color(255, 255, 255));
 		btnAddProduct.setFont(new Font("Tahoma", Font.BOLD, 13));
-		btnAddProduct.setForeground(new Color(144, 238, 144));
-		btnAddProduct.setBounds(24, 188, 128, 25);
+		btnAddProduct.setForeground(Color.BLACK);
+		btnAddProduct.setBounds(24, 211, 128, 25);
 		contentPane.add(btnAddProduct);
 		
 		textFieldID = new JTextField();
@@ -164,8 +172,61 @@ public class Product1 extends JFrame {
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				DisplayFromTable();
+			}
+		});
 		scrollPane.setViewportView(table);
+		
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setBackground(Color.WHITE);
+		btnUpdate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				UpdateDatabase();
+				ShowData();
+			}
+		});
+		btnUpdate.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnUpdate.setBounds(24, 294, 128, 25);
+		contentPane.add(btnUpdate);
+		
+		btnDelete = new JButton("Delete");
+		btnDelete.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				DeleteData();
+				ShowData();
+			}
+		});
+		btnDelete.setBackground(Color.WHITE);
+		btnDelete.setFont(new Font("Tahoma", Font.BOLD, 13));
+		btnDelete.setBounds(24, 423, 128, 25);
+		contentPane.add(btnDelete);
+		
+		textFieldDelete = new JTextField();
+		textFieldDelete.setBounds(24, 379, 128, 22);
+		contentPane.add(textFieldDelete);
+		textFieldDelete.setColumns(10);
+		
+		JLabel lblEnterIdOf = new JLabel("Enter ID of product");
+		lblEnterIdOf.setBounds(24, 334, 118, 16);
+		contentPane.add(lblEnterIdOf);
+		
+		JLabel lblToBeDeleted = new JLabel("   to be deleted");
+		lblToBeDeleted.setBounds(14, 350, 128, 16);
+		contentPane.add(lblToBeDeleted);
+		
+		lblSelectAProduct = new JLabel("Select a product");
+		lblSelectAProduct.setBounds(24, 249, 151, 16);
+		contentPane.add(lblSelectAProduct);
+		
+		lblToUpdateIt = new JLabel("to update it");
+		lblToUpdateIt.setBounds(24, 265, 74, 16);
+		contentPane.add(lblToUpdateIt);
+	
 	}
+	
 	
 	private void saveToDatabase() {
 		Connection conn = connection.dbConnector();
@@ -256,5 +317,92 @@ public class Product1 extends JFrame {
 		} catch(Exception e1) {
 			System.out.println("Error: " + e1);
 		}
+	}
+	private void UpdateDatabase() {
+		Connection conn = connection.dbConnector();
+		int Qty,Bonus,Stock;
+		try {
+			Qty = Integer.parseInt(textFieldQuantity.getText());
+			Bonus = Integer.parseInt(textFieldBonus.getText());
+			Stock = Qty + Bonus;
+			String Query = "UPDATE product SET Name=?,Supplier=?,QtyBought=?,Bonus=?,BoxQty=?,WPrice=?,RPrice=?,Exp=?,Stock=? WHERE ItemNO =? ";
+			
+			PreparedStatement ps = conn.prepareStatement(Query);
+			
+			ps.setString(1, textFieldName.getText());
+			ps.setString(2, textFieldSupplier.getText());
+			ps.setString(3, textFieldQuantity.getText());
+			ps.setString(4, textFieldBonus.getText());
+			ps.setString(5, textFieldBoxQty.getText());
+			ps.setString(6, textFieldWPrice.getText());
+			ps.setString(7, textFieldRPrice.getText());
+			ps.setString(8, textFieldExpiry.getText());
+			ps.setString(9, Integer.toString(Stock));
+			ps.setString(10, textFieldID.getText());
+
+			
+			
+			
+			
+	
+			ps.execute();
+			
+			
+			JOptionPane.showMessageDialog(null, "Product  updated successfully");
+			
+		}catch (Exception e){
+			System.out.println("Error: " +e);
+		}
+	}
+	private void DeleteData() {
+		try {
+			
+			String Query = "DELETE FROM product WHERE ItemNO = '"+textFieldDelete.getText()+" ' ";
+			PreparedStatement ps = conn.prepareStatement(Query);
+			
+			
+
+			
+			
+			
+			
+	
+			ps.execute();
+			
+			
+			JOptionPane.showMessageDialog(null, "Product Deleted");
+			
+		}catch (Exception e){
+			System.out.println("Error: " +e);
+		}
+	}
+	private void DisplayFromTable() {
+		try {
+			int row = table.getSelectedRow();
+			String PID = (table.getModel().getValueAt(row, 0)).toString();
+			
+			String query = "SELECT * FROM product WHERE ItemNO='" +PID+ "' ";
+			PreparedStatement ps = conn.prepareStatement(query);
+			
+			ResultSet rs = ps.executeQuery(query);
+			while (rs.next()) {
+				textFieldID.setText(rs.getString("ItemNO"));
+				textFieldName.setText(rs.getString("Name"));
+				textFieldSupplier.setText(rs.getString("Supplier"));
+				textFieldQuantity.setText(rs.getString("QtyBought"));
+				textFieldBonus.setText(rs.getString("Bonus"));
+				textFieldBoxQty.setText(rs.getString("BoxQty"));
+				textFieldWPrice.setText(rs.getString("WPrice"));
+				textFieldRPrice.setText(rs.getString("RPrice"));
+				textFieldExpiry.setText(rs.getString("Exp"));
+				
+			}
+			ps.close();
+			
+			
+		} catch(Exception e1) {
+			System.out.println("Error: " + e1);
+		}
+		
 	}
 }
