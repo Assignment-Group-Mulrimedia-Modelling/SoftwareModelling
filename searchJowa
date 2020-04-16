@@ -82,7 +82,7 @@ public class search extends JFrame {
 		scrollPane.setToolTipText("");
 		scrollPane.setBackground(new Color(255, 255, 255));
 		scrollPane.setForeground(new Color(255, 255, 255));
-		scrollPane.setBounds(39, 25, 695, 191);
+		scrollPane.setBounds(39, 25, 709, 191);
 		scrollPane.getViewport().setBackground(new Color(255,255,255));
 		
 		contentPane.add(scrollPane);
@@ -116,7 +116,7 @@ public class search extends JFrame {
 		
 		scrollPane_1 = new JScrollPane();
 		scrollPane_1.setForeground(new Color(255, 255, 255));
-		scrollPane_1.setBounds(39, 279, 695, 126);
+		scrollPane_1.setBounds(39, 279, 709, 126);
 		scrollPane_1.getViewport().setBackground(new Color(255,255,255));
 		contentPane.add(scrollPane_1);
 		
@@ -150,6 +150,8 @@ public class search extends JFrame {
 		btnProduct = new JButton("New Product");
 		btnProduct.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ProductInv product = new ProductInv();
+				product.setVisible(true);
 				
 			}
 		});
@@ -258,7 +260,7 @@ public class search extends JFrame {
 			table.getColumnModel().getColumn(2).setPreferredWidth(120);
 			table.getColumnModel().getColumn(3).setPreferredWidth(50);
 			table.getColumnModel().getColumn(4).setPreferredWidth(50);
-			table.getColumnModel().getColumn(5).setPreferredWidth(62);
+			table.getColumnModel().getColumn(5).setPreferredWidth(60);
 			table.getColumnModel().getColumn(6).setPreferredWidth(60);
 			table.getColumnModel().getColumn(7).setPreferredWidth(60);
 			table.getColumnModel().getColumn(8).setPreferredWidth(60);
