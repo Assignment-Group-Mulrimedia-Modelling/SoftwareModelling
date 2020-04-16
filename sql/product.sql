@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2020 at 12:21 PM
+-- Generation Time: Apr 16, 2020 at 10:07 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -36,19 +36,27 @@ CREATE TABLE `product` (
   `BoxQty` varchar(50) NOT NULL,
   `WPrice` varchar(50) NOT NULL,
   `RPrice` varchar(50) NOT NULL,
-  `Exp` varchar(20) NOT NULL
+  `Exp` varchar(20) NOT NULL,
+  `Stock` int(5) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`ItemNO`, `Name`, `Supplier`, `QtyBought`, `Bonus`, `BoxQty`, `WPrice`, `RPrice`, `Exp`) VALUES
-(1, 'Drontal Medium', 'Inicia', '2', '0', '20', '1340', '1608', '09/22'),
-(2, 'Drontal Small', 'Inicia', '3', '1', '20', '900', '1200', '05/23'),
-(21538, 'Doliprane', 'DST-Ltd', '45', '0', '8', '45', '57', '03/21'),
-(38694, 'Panadol', 'Unicorn-Trading', '3', '0', '8', '3', '5', '10/20'),
-(38695, 'Drontal Large', 'Inicia', '2', '0', '20', '3800', '4560', '08/22');
+INSERT INTO `product` (`ItemNO`, `Name`, `Supplier`, `QtyBought`, `Bonus`, `BoxQty`, `WPrice`, `RPrice`, `Exp`, `Stock`) VALUES
+(1, 'DrontalM', 'Inicia', '2', '0', '10', '1340', '1608', '09/22', 20),
+(2, 'DrontalS', 'Inicia', '3', '1', '20', '900', '1200', '15/23', 80),
+(3, 'Fervex', 'Nouvelle', '25', '5', '8', '80', '105', '12/22', 240),
+(4, 'HCQS', 'FTM', '20', '4', '30', '190', '250', '04/22', 720),
+(5, 'Vasograin', 'Mauritius', '5', '1', '100', '750', '832', '10/20', 600),
+(6, 'Panadol', 'Nouvelle', '25', '6', '100', '230', '290', '05/21', 3100),
+(7, 'Frontline', 'Inicia', '10', '1', '1', '180', '230', '05/22', 11),
+(8, 'Atacand', 'IBL', '4', '1', '28', '678', '805', '05/23', 140),
+(9, 'Lempsip', 'Unicorn', '10', '3', '8', '95', '123', '08/20', 104),
+(10, 'Uniflu', 'Socimed', '6', '1', '12', '145', '185', '05/21', 84),
+(21538, 'Doliprane', 'IBL', '45', '7', '8', '39', '51', '03/21', 416),
+(38695, 'DrontalL', 'Inicia', '3', '1', '20', '3800', '4560', '08/22', 80);
 
 --
 -- Indexes for dumped tables
@@ -74,4 +82,3 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
-
