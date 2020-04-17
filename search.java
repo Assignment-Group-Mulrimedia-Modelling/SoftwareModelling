@@ -178,7 +178,7 @@ public class search extends JFrame {
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(JOptionPane.showConfirmDialog(null, "Do you want to save and return to homepage ?", "Confirmation", JOptionPane.YES_NO_OPTION) == 0) {
-				
+					saveDB();
 				try{
 
 					  int rows=table_2.getRowCount();
@@ -206,7 +206,46 @@ public class search extends JFrame {
 				search.this.dispose();
 			}
 			
-			}	
+			}
+
+			private void saveDB() {
+				Connection conn = connection.dbConnector();
+				double discount,total;
+				try {
+					java.util.Date date=new java.util.Date();
+					
+					java.sql.Date sqlDate=new java.sql.Date(date.getTime());
+					java.sql.Timestamp sqlTime=new java.sql.Timestamp(date.getTime());
+					discount = Double.parseDouble(textFieldDiscount.getText());
+					total = Double.parseDouble(lblShowNetTotal.getText());
+				
+					String Query = "INSERT INTO transaction(Discount,Total,Date,Time) VALUES(?,?,?,?)";
+					
+					PreparedStatement ps = conn.prepareStatement(Query);
+					
+					ps.setString(1, textFieldDiscount.getText());
+					ps.setString(2, lblShowNetTotal.getText());
+					ps.setDate(3,sqlDate);
+					ps.setTimestamp(4,sqlTime);
+
+					
+					
+					
+					
+			
+					ps.execute();
+					
+					
+					JOptionPane.showMessageDialog(null, "Product  updated successfully");
+					
+				}catch (Exception e){
+					System.out.println("Error: " +e);
+				}
+				
+				
+			}
+
+			
 			
 		});
 		btnNewButton_1.setBounds(115, 502, 89, 23);
